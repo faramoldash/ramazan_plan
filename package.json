@@ -1,0 +1,16 @@
+{
+  "name": "ramadan-planner",
+  "version": "1.0.0",
+  "description": "Рамадан планировщик для Telegram",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-telegram-bot-api": "^0.61.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

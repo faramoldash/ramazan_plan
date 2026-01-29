@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рамадан Жоспарлаушысы</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Жоғарғы бөлім -->
+        <header class="header">
+            <div class="ramadan-info">
+                <h1>Рамадан <span id="current-day">1</span>/30</h1>
+                <p id="hijri-date"></p>
+                <p id="location"><i class="fas fa-location-dot"></i> Қазақстан</p>
+            </div>
+            
+            <div class="prayer-times">
+                <div class="time-card">
+                    <i class="fas fa-moon"></i>
+                    <div>
+                        <span class="prayer-name">Таң</span>
+                        <span class="prayer-time" id="fajr-time">--:--</span>
+                    </div>
+                </div>
+                <div class="time-card">
+                    <i class="fas fa-sun"></i>
+                    <div>
+                        <span class="prayer-name">Ақшам</span>
+                        <span class="prayer-time" id="maghrib-time">--:--</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Таймерлер -->
+        <section class="timers">
+            <div class="timer-card" id="iftar-timer">
+                <div class="timer-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="timer-content">
+                    <h3>Ифтарға дейін</h3>
+                    <div class="countdown" id="iftar-countdown">00:00:00</div>
+                </div>
+            </div>
+            
+            <div class="timer-card" id="suhur-timer">
+                <div class="timer-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="timer-content">
+                    <h3>Сәхәрге дейін</h3>
+                    <div class="countdown" id="suhur-countdown">00:00:00</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ораза күнтізбесі -->
+        <section class="calendar-section">
+            <h2><i class="fas fa-calendar-days"></i> Ораза күнтізбесі</h2>
+            <div class="calendar-nav">
+                <button onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+                <h3 id="current-month">Наурыз 2024</h3>
+                <button onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="calendar-grid" id="calendar">
+                <!-- Күнтізбе JS арқылы толтырылады -->
+            </div>
+            <div class="calendar-legend">
+                <div class="legend-item">
+                    <span class="legend-color today"></span>
+                    <span>Бүгін</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color fasted"></span>
+                    <span>Ораза тұтылды</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color future"></span>
+                    <span>Алдағы күн</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Күнделікті мақсаттар -->
+        <section class="goals-section">
+            <h2><i class="fas fa-bullseye"></i> Күнделікті мақсаттар</h2>
+            <div class="goals-container">
+                <div class="goal" onclick="toggleGoal('quran')">
+                    <div class="goal-check">
+                        <i class="fas fa-check" id="quran-check"></i>
+                    </div>
+                    <div class="goal-icon">
+                        <i class="fas fa-book-quran"></i>
+                    </div>
+                    <div class="goal-info">
+                        <h4>Құран оқу</h4>
+                        <p>1 жүз оқыңыз</p>
+                    </div>
+                    <div class="goal-progress">
+                        <div class="progress-bar">
+                            <div class="progress" id="quran-progress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="goal" onclick="toggleGoal('prayer')">
+                    <div class="goal-check">
+                        <i class="fas fa-check" id="prayer-check"></i>
+                    </div>
+                    <div class="goal-icon">
+                        <i class="fas fa-mosque"></i>
+                    </div>
+                    <div class="goal-info">
+                        <h4>Намаз оқу</h4>
+                        <p>5 уақыт намаз</p>
+                    </div>
+                </div>
+
+                <div class="goal" onclick="toggleGoal('charity')">
+                    <div class="goal-check">
+                        <i class="fas fa-check" id="charity-check"></i>
+                    </div>
+                    <div class="goal-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <div class="goal-info">
+                        <h4>Садақа беру</h4>
+                        <p>Күнделікті садақа</p>
+                    </div>
+                </div>
+
+                <div class="goal" onclick="toggleGoal('dhikr')">
+                    <div class="goal-check">
+                        <i class="fas fa-check" id="dhikr-check"></i>
+                    </div>
+                    <div class="goal-icon">
+                        <i class="fas fa-hands-praying"></i>
+                    </div>
+                    <div class="goal-info">
+                        <h4>Зікір айту</h4>
+                        <p>100 рет "Субханаллах"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Күннің дуасы -->
+        <section class="dua-section">
+            <h2><i class="fas fa-star-and-crescent"></i> Күннің дуасы</h2>
+            <div class="dua-card">
+                <div class="dua-arabic">
+                    <p id="dua-text">اَللَّهُمَّ لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَيْكَ تَوَكَّلْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ</p>
+                </div>
+                <div class="dua-translation">
+                    <p id="dua-translation">"Аллаһым! Сенің үшін ораза тұттым, саған сендім, саған жүгіндім және Сенің ризығыңбен ифтар жасадым."</p>
+                </div>
+                <button class="dua-button" onclick="copyDua()">
+                    <i class="far fa-copy"></i> Көшіру
+                </button>
+                <button class="dua-button" onclick="shareDua()">
+                    <i class="fas fa-share-alt"></i> Бөлісу
+                </button>
+            </div>
+        </section>
+
+        <!-- Статистика -->
+        <section class="stats-section">
+            <h2><i class="fas fa-chart-bar"></i> Статистика</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="fasted-days">0</div>
+                    <div class="stat-label">Ораза күндері</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="quran-pages">0</div>
+                    <div class="stat-label">Құран парақтары</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="charity-count">0</div>
+                    <div class="stat-label">Садақа саны</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="prayer-count">0</div>
+                    <div class="stat-label">Намаз саны</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Навигация -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" onclick="showTab('home')">
+                <i class="fas fa-home"></i>
+                <span>Басты бет</span>
+            </button>
+            <button class="nav-btn" onclick="showTab('quran')">
+                <i class="fas fa-book-quran"></i>
+                <span>Құран</span>
+            </button>
+            <button class="nav-btn" onclick="showTab('prayer')">
+                <i class="fas fa-mosque"></i>
+                <span>Намаз</span>
+            </button>
+            <button class="nav-btn" onclick="showTab('settings')">
+                <i class="fas fa-cog"></i>
+                <span>Баптаулар</span>
+            </button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
